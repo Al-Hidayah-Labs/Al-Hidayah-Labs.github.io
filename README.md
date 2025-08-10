@@ -1,2 +1,3 @@
-# Al-Hidayah-Labs.github.io
-Website
+# Al-Hidayah-Labs 
+
+Main website
