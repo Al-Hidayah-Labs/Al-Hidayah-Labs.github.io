@@ -16,23 +16,23 @@ const App: React.FC = () => {
             <img
               src="artifacts/logo.jpg"
               alt="Al Hidayah Labs Logo"
-              className="mb-6 h-24 w-24 md:h-28 md:w-28 rounded-full object-cover"
+              className="mb-6 h-36 w-auto md:h-40 shadow-md"
             />
           </div>
 
-          <h1 className="text-6xl sm:text-7xl md:text-8xl font-bold tracking-tight text-emerald-800">
+          <h1 className="font-reemkufi text-6xl sm:text-7xl md:text-8xl font-bold tracking-tight text-emerald-900">
             AL HIDAYAH
           </h1>
-          <p className="text-4xl sm:text-5xl md:text-6xl font-semibold tracking-wider text-emerald-700">
+          <p className="font-reemkufi text-4xl sm:text-5xl md:text-7xl font-semibold tracking-wider text-emerald-800">
             LABS
           </p>
           
-          <p className="mt-6 text-lg md:text-xl text-emerald-700 font-medium">
+          <p className="mt-6 font-sans text-lg md:text-xl text-emerald-700 font-medium">
             Building open-source AI for Muslims
           </p>
           
           <div className="mt-12">
-            <span className="inline-block bg-white/80 backdrop-blur-sm border border-emerald-200 rounded-full px-8 py-3 text-2xl md:text-3xl font-light text-emerald-800 tracking-wider shadow-lg">
+            <span className="inline-block font-sans bg-white/80 backdrop-blur-sm border border-emerald-200 rounded-full px-8 py-3 text-2xl md:text-3xl font-light text-emerald-800 tracking-wider shadow-lg">
               Coming Soon
             </span>
           </div>
