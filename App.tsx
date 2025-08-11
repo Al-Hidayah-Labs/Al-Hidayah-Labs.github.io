@@ -36,6 +36,11 @@ const App: React.FC = () => {
               Coming Soon
             </span>
           </div>
+          <div className="mt-8">
+            <p className="text-lg font-sans text-emerald-700">
+              For inquiries: <a href="mailto:info@alhidayahlabs.org" className="font-semibold text-emerald-800 hover:text-emerald-950 underline">info@alhidayahlabs.org</a>
+            </p>
+          </div>
         </div>
       </main>
 
