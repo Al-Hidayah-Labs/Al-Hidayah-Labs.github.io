@@ -1,54 +1,62 @@
-import React from 'react';
 
-// The LogoIcon SVG component has been removed.
+import React, { useState, useEffect } from 'react';
+import { Header } from './layout/Header';
+import { Footer } from './layout/Footer';
+import { HomePage } from './pages/HomePage';
+import { PlaceholderPage } from './pages/PlaceholderPage';
+import { pages, slugToPageMap, navLinks, footerLinks } from './constants/navigation';
 
 const App: React.FC = () => {
-  return (
-    <div className="relative min-h-screen w-full bg-emerald-50 overflow-hidden">
-      {/* Background decorative elements */}
-      <div className="absolute top-0 left-0 -translate-x-1/4 -translate-y-1/4 w-96 h-96 bg-emerald-400/20 rounded-full filter blur-3xl" />
-      <div className="absolute bottom-0 right-0 translate-x-1/4 translate-y-1/4 w-96 h-96 bg-teal-400/20 rounded-full filter blur-3xl" />
+    const [currentPage, setCurrentPage] = useState('Home');
 
-      <main className="relative z-10 flex flex-col items-center justify-center min-h-screen text-center p-4">
-        <div className="max-w-3xl mx-auto">
-          <div className="flex justify-center">
-            {/* Adding the logo image */}
-            <img
-              src="artifacts/logo.jpg"
-              alt="Al Hidayah Labs Logo"
-              className="mb-6 h-36 w-auto md:h-40 shadow-md"
-            />
-          </div>
+    useEffect(() => {
+        const handleHashChange = () => {
+            const hash = window.location.hash.replace('#', '') || 'home';
+            const pageTitle = slugToPageMap[hash] || 'Home';
+            setCurrentPage(pageTitle);
+            window.scrollTo(0, 0);
+        };
 
-          <h1 className="font-reemkufi text-6xl sm:text-7xl md:text-8xl font-bold tracking-tight text-emerald-900">
-            AL HIDAYAH
-          </h1>
-          <p className="font-reemkufi text-4xl sm:text-5xl md:text-7xl font-semibold tracking-wider text-emerald-800">
-            LABS
-          </p>
-          
-          <p className="mt-6 font-sans text-lg md:text-xl text-emerald-700 font-medium">
-            Building open-source AI for Muslims
-          </p>
-          
-          <div className="mt-12">
-            <span className="inline-block font-sans bg-white/80 backdrop-blur-sm border border-emerald-200 rounded-full px-8 py-3 text-2xl md:text-3xl font-light text-emerald-800 tracking-wider shadow-lg">
-              Coming Soon
-            </span>
-          </div>
-          <div className="mt-8">
-            <p className="text-lg font-sans text-emerald-700">
-              For inquiries: <a href="mailto:info@alhidayahlabs.org" className="font-semibold text-emerald-800 hover:text-emerald-950 underline">info@alhidayahlabs.org</a>
-            </p>
-          </div>
+        window.addEventListener('hashchange', handleHashChange);
+        handleHashChange(); // Set initial page
+
+        return () => window.removeEventListener('hashchange', handleHashChange);
+    }, []);
+
+    const navigate = (page: string) => {
+        const pageDetails = pages[page];
+        if (pageDetails) {
+            window.location.hash = pageDetails.slug;
+        }
+    };
+
+    const renderPage = () => {
+        const pageDetails = pages[currentPage];
+        if (!pageDetails) {
+            return <HomePage navigate={navigate} />;
+        }
+        
+        if (pageDetails.slug === 'home') {
+            return <HomePage navigate={navigate} />;
+        } else {
+            return <PlaceholderPage title={pageDetails.title} description={pageDetails.description} />;
+        }
+    };
+
+    return (
+        <div className="relative min-h-screen w-full bg-emerald-50 text-emerald-900 overflow-x-hidden">
+            <div className="absolute top-0 left-0 -translate-x-1/4 -translate-y-1/4 w-96 h-96 bg-emerald-400/20 rounded-full filter blur-3xl opacity-50" aria-hidden="true" />
+            <div className="absolute bottom-0 right-0 translate-x-1/4 translate-y-1/4 w-96 h-96 bg-teal-400/20 rounded-full filter blur-3xl opacity-50" aria-hidden="true" />
+            
+            <div className="relative z-10 flex flex-col min-h-screen">
+                <Header navigate={navigate} currentPage={currentPage} navLinks={navLinks} />
+                <main className="flex-grow">
+                    {renderPage()}
+                </main>
+                <Footer navigate={navigate} navLinks={navLinks} footerLinks={footerLinks} />
+            </div>
         </div>
-      </main>
-
-      <footer className="absolute bottom-5 left-0 right-0 z-10 text-center text-emerald-600 text-sm">
-        &copy; {new Date().getFullYear()} Al Hidayah Labs. All rights reserved.
-      </footer>
-    </div>
-  );
+    );
 };
 
 export default App;
